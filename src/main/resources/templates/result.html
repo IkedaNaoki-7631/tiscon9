@@ -1,7 +1,38 @@
 <!DOCTYPE html>
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
-
+<body>
+<nav th:insert="header.html :: header"></nav>
+</body>
+</body>
 <head>
+  <form th:action="@{/submit}" th:object="${userOrderForm}" class="form-horizontal" method="post" onkeypress="disableEnterKey(event)">
+    <div class="progress-icon">
+      <img src="../img/progress_result.svg" />
+    </div>
+    <div class="page-title">
+      お見積り情報入力
+    </div>
+    <ul th:if="${#fields.hasErrors('all')}">
+      <li th:each="err : ${#fields.errors('all')}" th:text="${err}"></li>
+    </ul>
+    <div class="col-sm-12">
+      <fieldset>
+  <div class="sub-title">お客様情報</div>
+        <div class="form-group">
+          <label for="customerName">氏名</label>
+          <input type="text" id="customerName" name="customerName" th:field="*{customerName}" class="form-control" value="山田太郎"/>
+        </div>
+        <div class="form-group">
+          <label for="tel">連絡先TEL</label>
+          <input type="tel" id="tel" name="tel" th:field="*{tel}" class="form-control" value="03-1234-5678"/>
+        </div>
+        <div class="form-group">
+          <label for="email">連絡先メールアドレス</label>
+          <input type="text" id="email" name="email" th:field="*{email}" class="form-control" value="test@test.com"/>
+        </div>
+      </fieldset>
+    </div>
+  </form>
   <title>概算お見積もり結果</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
@@ -11,20 +42,16 @@
 </head>
 
 <body>
-<nav th:insert="header.html :: header"></nav>
 <div class="container">
   <form th:action="@{/order}" th:object="${userOrderForm}" class="form-horizontal" method="post">
-    <div class="progress-icon">
-      <img src="../img/progress_result.svg" />
-    </div>
     <div class="page-title">概算お見積り結果</div>
     <div class="col-sm-12">
       <div class="text-center">
         <div class="primary-text"><span th:text="${price}"></span>円</div>
         <button type="submit" name="complete" class="btn btn-primary">詳細見積もり依頼へ</button>
       </div>
-      <div class="sub-title">お客様情報</div>
-        <table class="table table-bordered">
+      <div class="sub-title" style="display: none;">お客様情報</div>
+        <table class="table table-bordered" style="display: none;">
         <col span="1" style="background-color: #FFFFFF;">
         <col span="2" style="background-color: #FFFFFF;">
         <tbody>
