@@ -23,13 +23,13 @@ public class UserOrderForm {
     @NotBlank
     private String oldPrefectureId;
 
-    @NotBlank
+    @NotBlank(message = "集荷元住所が入力されていません")
     private String oldAddress;
 
     @NotBlank
     private String newPrefectureId;
 
-    @NotBlank
+    @NotBlank(message = "お届け先住所が入力されていません")
     private String newAddress;
 
     @Numeric
