@@ -71,14 +71,24 @@ public class EstimateController {
      * 確認画面に遷移する。
      *
      * @param userOrderForm 顧客が入力した見積もり依頼情報
+     * @param result
      * @param model         遷移先に連携するデータ
      * @return 遷移先
      */
     @PostMapping(value = "submit", params = "confirm")
-    String confirm(UserOrderForm userOrderForm, Model model) {
+    String confirm(@Validated UserOrderForm userOrderForm,BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("prefectures", estimateDAO.getAllPrefectures());
+            model.addAttribute("userOrderForm", userOrderForm);
+            return "input";
+        }
+        UserOrderDto dto = new UserOrderDto();
+        BeanUtils.copyProperties(userOrderForm, dto);
+        Integer price = estimateService.getPrice(dto);
 
         model.addAttribute("prefectures", estimateDAO.getAllPrefectures());
         model.addAttribute("userOrderForm", userOrderForm);
+        model.addAttribute("price", price);
         return "confirm";
     }
 
@@ -130,11 +140,11 @@ public class EstimateController {
         // 料金の計算を行う。
         UserOrderDto dto = new UserOrderDto();
         BeanUtils.copyProperties(userOrderForm, dto);
-        Integer price = estimateService.getPrice(dto);
+        //Integer price = estimateService.getPrice(dto);
 
         model.addAttribute("prefectures", estimateDAO.getAllPrefectures());
         model.addAttribute("userOrderForm", userOrderForm);
-        model.addAttribute("price", price);
+        //model.addAttribute("price", price);
         return "result";
     }
 
@@ -148,12 +158,7 @@ public class EstimateController {
      */
     @PostMapping(value = "order", params = "complete")
     String complete(@Validated UserOrderForm userOrderForm, BindingResult result, Model model) {
-        if (result.hasErrors()) {
 
-            model.addAttribute("prefectures", estimateDAO.getAllPrefectures());
-            model.addAttribute("userOrderForm", userOrderForm);
-            return "confirm";
-        }
 
         UserOrderDto dto = new UserOrderDto();
         BeanUtils.copyProperties(userOrderForm, dto);
