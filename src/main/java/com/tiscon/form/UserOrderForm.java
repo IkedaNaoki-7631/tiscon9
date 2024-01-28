@@ -13,15 +13,11 @@ import javax.validation.constraints.NotNull;
  */
 public class UserOrderForm {
 
-    @NotBlank
+    
     private String customerName;
 
-    @NotBlank
-    @Numeric
     private String tel;
 
-    @Email
-    @NotBlank
     private String email;
 
     @NotBlank
