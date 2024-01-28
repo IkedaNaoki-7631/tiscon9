@@ -13,14 +13,14 @@ import javax.validation.constraints.NotNull;
  */
 public class UserOrderForm {
 
-    @NotBlank
+    @NotBlank(message = "氏名が入力されていません")
     private String customerName;
 
-    @NotBlank
+    @NotBlank(message = "電話番号が正しく入力されていません")
     @Numeric
     private String tel;
 
-    @Email
+    @Email(message = "メールアドレスが正しく入力されていません")
     @NotBlank
     private String email;
 
@@ -37,19 +37,19 @@ public class UserOrderForm {
     private String newAddress;
 
     @Numeric
-    @NotBlank
+    @NotBlank(message = "段ボールの個数が選択されていません")
     private String box;
 
     @Numeric
-    @NotBlank
+    @NotBlank(message = "ベッドの個数が選択されていません")
     private String bed;
 
     @Numeric
-    @NotBlank
+    @NotBlank(message = "自転車の個数が選択されていません")
     private String bicycle;
 
     @Numeric
-    @NotBlank
+    @NotBlank(message = "洗濯機の個数が選択されていません")
     private String washingMachine;
 
     @NotNull
